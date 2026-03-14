@@ -95,7 +95,7 @@ export const MapData = {
         waves: 28,
         startEssence: 190,
         lives: 15,
-        goldMult: 2.5,
+        goldMult: 6.25,
         requiredMap: 'desert',
         entry: { col: 0, row: 17 },
         exit: { col: 26, row: 10 },
