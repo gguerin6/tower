@@ -1,0 +1,126 @@
+{
+  "1": {
+    "slot": 1,
+    "version": 1,
+    "createdAt": 1709900000000,
+    "updatedAt": 1709900000000,
+    "playTime": 36000,
+
+    "level": 30,
+    "xp": 0,
+    "gold": 99999,
+    "skillPoints": 0,
+
+    "statUpgrades": {
+      "maxHp": 10,
+      "damage": 10,
+      "armor": 10,
+      "speed": 10,
+      "hpRegen": 10
+    },
+
+    "towerResearch": {
+      "archer": { "damage": 5, "range": 5, "speed": 5 },
+      "mage": { "damage": 5, "range": 5, "speed": 5 },
+      "cannon": { "damage": 5, "range": 5, "speed": 5, "splash": 5 },
+      "frost": { "damage": 5, "range": 5, "speed": 5, "slow": 5 },
+      "tesla": { "damage": 5, "range": 5, "speed": 5, "chain": 5 }
+    },
+
+    "equipment": {
+      "weapon": "godSlayer",
+      "armor": "eternityGuard",
+      "accessory": "celestialOrb"
+    },
+
+    "gear": {
+      "sword": 10,
+      "helmet": 10,
+      "chestplate": 10,
+      "leggings": 10,
+      "boots": 10
+    },
+
+    "materials": {
+      "wood": 999,
+      "stone": 999,
+      "iron": 999,
+      "crystal": 999,
+      "darkEssence": 999
+    },
+
+    "buildings": {
+      "blacksmith": 5,
+      "elder": 5,
+      "sage": 5,
+      "merchant": 5,
+      "beastmaster": 5
+    },
+
+    "inventory": [
+      "godSlayer", "eternityGuard", "celestialOrb",
+      "voidReaper", "voidShell", "infinityBand",
+      "cosmicEdge", "titanPlate", "warlordsMantle",
+      "flameBlade", "dragonScale", "dragonHeart",
+      "battleAxe", "plateArmor", "bloodstone",
+      "longSword", "chainmail", "phoenixFeather",
+      "shortSword", "leatherArmor", "regenCloak",
+      "critGloves", "thornMail", "warBanner",
+      "vampRing", "goldRing", "healthAmulet", "speedBoots"
+    ],
+
+    "skills": {
+      "whirlwind": 5,
+      "warCry": 5,
+      "heal": 5,
+      "thunderStrike": 5,
+      "shield": 5,
+      "toughness": 5,
+      "swiftBlade": 5,
+      "goldFind": 5,
+      "ironSkin": 5,
+      "commander": 5
+    },
+
+    "pets": {
+      "unlocked": {
+        "wolf": true,
+        "fireSprite": true,
+        "frostFairy": true,
+        "thunderHawk": true,
+        "shadowCat": true,
+        "phoenix": true
+      },
+      "levels": {
+        "wolf": 5,
+        "fireSprite": 5,
+        "frostFairy": 5,
+        "thunderHawk": 5,
+        "shadowCat": 5,
+        "phoenix": 5
+      },
+      "active": "phoenix"
+    },
+
+    "mapsCompleted": {
+      "forest": true,
+      "desert": true,
+      "mountain": true,
+      "swamp": true
+    },
+    "bestWave": {
+      "forest": 20,
+      "desert": 24,
+      "mountain": 28,
+      "swamp": 32
+    },
+
+    "quests": {
+      "lastReset": 0,
+      "progress": {},
+      "completed": {}
+    },
+
+    "currentMap": null
+  }
+}

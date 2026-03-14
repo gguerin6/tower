@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: calc(100vh * 960 / 640);
+    max-height: calc(100vw * 640 / 960);
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+    image-rendering: optimizeQuality;
+}
+
+#bg-canvas { z-index: 1; }
+#entity-canvas { z-index: 2; }
+#ui-canvas { z-index: 3; }
