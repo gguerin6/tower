@@ -371,7 +371,7 @@ export class GameScene extends Scene {
                     victory: true, gold: totalReward, waveGold, victoryBonus,
                     wave, mapId: this.mapId,
                     loot: { ...this.lootCollected },
-                    xpEarned: this.runXp
+                    xpEarned: Math.floor(this.runXp * (this.mapData.xpMult || 1))
                 });
             }),
             EventBus.on('chainLightning', ({ from, to }) => {
@@ -732,7 +732,7 @@ export class GameScene extends Scene {
             isNewRecord,
             bestWave: Math.max(best, wave),
             loot: { ...this.lootCollected },
-            xpEarned: this.runXp
+            xpEarned: Math.floor(this.runXp * (this.mapData.xpMult || 1))
         });
     }
 
