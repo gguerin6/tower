@@ -10,6 +10,7 @@ export class AudioManager {
         this.musicVolume = 0.3;
         this.sfxVolume = 0.5;
         this.musicLoaded = false;
+        this.pendingMusicSrc = null;
     }
 
     init() {
@@ -23,7 +24,8 @@ export class AudioManager {
             this.sfxGain.gain.value = this.sfxVolume;
             this.sfxGain.connect(this.ctx.destination);
             this.initialized = true;
-            this._loadMusic();
+            this._loadMusic(this.pendingMusicSrc);
+            this.pendingMusicSrc = null;
         } catch (e) {
             console.warn('Web Audio not supported');
         }
@@ -40,9 +42,9 @@ export class AudioManager {
         }
     }
 
-    _loadMusic() {
+    _loadMusic(src) {
         if (this.musicElement) return;
-        this.currentMusicSrc = 'assets/music.mp3';
+        this.currentMusicSrc = src || 'assets/music.mp3';
         this.musicElement = new window.Audio(this.currentMusicSrc);
         this.musicElement.loop = true;
         this.musicElement.preload = 'auto';
@@ -54,7 +56,10 @@ export class AudioManager {
     }
 
     switchMusic(src) {
-        if (!this.initialized) this.init();
+        if (!this.initialized) {
+            this.pendingMusicSrc = src;
+            return;
+        }
         if (this.currentMusicSrc === src) return;
         this.currentMusicSrc = src;
         if (this.musicElement) {
