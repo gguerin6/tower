@@ -78,9 +78,7 @@ export class AudioManager {
     }
 
     ensureMusic() {
-        if (!this.initialized) {
-            this.init();
-        }
+        if (!this.initialized) return;
         this.resume();
         if (!this.musicPlaying) {
             this.startMusic();

@@ -14,7 +14,7 @@ export const PetData = {
             hp: 60
         },
         // Per-level multipliers (level 1-5)
-        upgradeCosts: [0, 300, 700, 1500, 3500],
+        upgradeCosts: [0, 200, 460, 980, 2280],
         levelBonuses: {
             damage:      [0, 5, 12, 22, 35],
             attackSpeed: [0, 0.15, 0.3, 0.5, 0.7],
@@ -40,7 +40,7 @@ export const PetData = {
             speed: 110,
             hp: 40
         },
-        upgradeCosts: [0, 400, 900, 2000, 4500],
+        upgradeCosts: [0, 260, 590, 1300, 2930],
         levelBonuses: {
             damage:      [0, 4, 10, 18, 30],
             attackSpeed: [0, 0.1, 0.2, 0.35, 0.5],
@@ -66,7 +66,7 @@ export const PetData = {
             speed: 100,
             hp: 35
         },
-        upgradeCosts: [0, 450, 1000, 2200, 5000],
+        upgradeCosts: [0, 290, 650, 1430, 3250],
         levelBonuses: {
             damage:      [0, 3, 8, 15, 25],
             attackSpeed: [0, 0.1, 0.2, 0.3, 0.45],
@@ -92,7 +92,7 @@ export const PetData = {
             speed: 160,
             hp: 30
         },
-        upgradeCosts: [0, 600, 1300, 2800, 6000],
+        upgradeCosts: [0, 390, 850, 1820, 3900],
         levelBonuses: {
             damage:      [0, 5, 12, 20, 32],
             attackSpeed: [0, 0.2, 0.4, 0.6, 0.9],
@@ -118,7 +118,7 @@ export const PetData = {
             speed: 150,
             hp: 45
         },
-        upgradeCosts: [0, 800, 1800, 3800, 8000],
+        upgradeCosts: [0, 520, 1170, 2470, 5200],
         levelBonuses: {
             damage:      [0, 8, 18, 32, 50],
             attackSpeed: [0, 0.15, 0.3, 0.5, 0.7],
@@ -144,7 +144,7 @@ export const PetData = {
             speed: 120,
             hp: 50
         },
-        upgradeCosts: [0, 1200, 2500, 5000, 10000],
+        upgradeCosts: [0, 780, 1630, 3250, 6500],
         levelBonuses: {
             damage:      [0, 3, 7, 14, 24],
             attackSpeed: [0, 0.1, 0.2, 0.3, 0.45],

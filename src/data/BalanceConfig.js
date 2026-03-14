@@ -48,8 +48,8 @@ export const BalanceConfig = {
 
     XP_PER_KILL: 8,
     XP_LEVEL_BASE: 100,
-    XP_LEVEL_MULT: 1.45,
+    XP_LEVEL_MULT: 1.28,
     XP_PER_WAVE: 14,
     MAX_LEVEL: 30,
-    SKILL_POINTS_PER_LEVEL: 1
+    SKILL_POINTS_PER_LEVEL: 2
 };

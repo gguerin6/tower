@@ -13,7 +13,7 @@ export const MapData = {
         waves: 20,
         startEssence: 120,
         lives: 20,
-        goldMult: 1,
+        goldMult: 1.5,
         entry: { col: 0, row: 3 },
         exit: { col: 26, row: 10 },
         path: [

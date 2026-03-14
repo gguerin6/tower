@@ -24,7 +24,7 @@ export const GearData = {
         icon: 'sword',
         color: '#cc9966',
         bonusPerLevel: [5, 6, 7, 8, 10, 12, 14, 17, 20, 24],
-        cost:           [50, 90, 160, 280, 480, 800, 1350, 2200, 3600, 6000],
+        cost:           [50, 90, 160, 280, 480, 800, 940, 1540, 2520, 4200],
         description: lvl => `+${GearData.sword.totalBonus(lvl)} damage`
     },
     helmet: {
@@ -33,7 +33,7 @@ export const GearData = {
         icon: 'helmet',
         color: '#44aa44',
         bonusPerLevel: [15, 18, 22, 28, 35, 44, 55, 70, 90, 115],
-        cost:           [40, 75, 135, 240, 420, 720, 1200, 2000, 3300, 5500],
+        cost:           [40, 75, 135, 240, 420, 720, 840, 1400, 2310, 3850],
         description: lvl => `+${GearData.helmet.totalBonus(lvl)} HP`
     },
     chestplate: {
@@ -42,7 +42,7 @@ export const GearData = {
         icon: 'shield',
         color: '#6688cc',
         bonusPerLevel: [4, 5, 6, 8, 10, 13, 16, 20, 26, 33],
-        cost:           [45, 80, 145, 260, 450, 770, 1280, 2100, 3500, 5800],
+        cost:           [45, 80, 145, 260, 450, 770, 900, 1470, 2450, 4060],
         description: lvl => `+${GearData.chestplate.totalBonus(lvl)} armor`
     },
     leggings: {
@@ -51,7 +51,7 @@ export const GearData = {
         icon: 'boot',
         color: '#88ee88',
         bonusPerLevel: [8, 10, 12, 14, 16, 19, 22, 26, 30, 35],
-        cost:           [35, 65, 120, 210, 370, 640, 1080, 1800, 3000, 5000],
+        cost:           [35, 65, 120, 210, 370, 640, 760, 1260, 2100, 3500],
         description: lvl => `+${GearData.leggings.totalBonus(lvl)} speed`
     },
     boots: {
@@ -60,7 +60,7 @@ export const GearData = {
         icon: 'boot',
         color: '#ffdd88',
         bonusPerLevel: [0.04, 0.04, 0.05, 0.05, 0.06, 0.06, 0.07, 0.07, 0.08, 0.08],
-        cost:           [45, 85, 150, 270, 470, 800, 1350, 2250, 3700, 6200],
+        cost:           [45, 85, 150, 270, 470, 800, 940, 1580, 2590, 4340],
         description: lvl => {
             const total = GearData.boots.bonusPerLevel.slice(0, lvl).reduce((a, b) => a + b, 0);
             return `+${(total * 100).toFixed(0)}% attack speed`;

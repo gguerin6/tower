@@ -13,21 +13,21 @@ export const TowerResearchData = {
                 description: '+10% damage per level',
                 bonusPerLevel: 0.10,
                 maxLevel: 5,
-                cost: [100, 220, 480, 1000, 2200]
+                cost: [60, 130, 290, 600, 1320]
             },
             range: {
                 name: 'Eagle Eye',
                 description: '+8% range per level',
                 bonusPerLevel: 0.08,
                 maxLevel: 5,
-                cost: [80, 180, 400, 850, 1900]
+                cost: [50, 110, 240, 510, 1140]
             },
             speed: {
                 name: 'Rapid Fire',
                 description: '+8% attack speed per level',
                 bonusPerLevel: 0.08,
                 maxLevel: 5,
-                cost: [120, 260, 560, 1200, 2600]
+                cost: [70, 160, 340, 720, 1560]
             }
         }
     },
@@ -41,21 +41,21 @@ export const TowerResearchData = {
                 description: '+10% damage per level',
                 bonusPerLevel: 0.10,
                 maxLevel: 5,
-                cost: [140, 300, 650, 1400, 3000]
+                cost: [80, 180, 390, 840, 1800]
             },
             range: {
                 name: 'Far Sight',
                 description: '+8% range per level',
                 bonusPerLevel: 0.08,
                 maxLevel: 5,
-                cost: [100, 220, 480, 1000, 2200]
+                cost: [60, 130, 290, 600, 1320]
             },
             speed: {
                 name: 'Quick Cast',
                 description: '+8% attack speed per level',
                 bonusPerLevel: 0.08,
                 maxLevel: 5,
-                cost: [160, 350, 750, 1600, 3400]
+                cost: [100, 210, 450, 960, 2040]
             }
         }
     },
@@ -69,21 +69,21 @@ export const TowerResearchData = {
                 description: '+10% damage per level',
                 bonusPerLevel: 0.10,
                 maxLevel: 5,
-                cost: [160, 350, 750, 1600, 3400]
+                cost: [100, 210, 450, 960, 2040]
             },
             range: {
                 name: 'Long Barrel',
                 description: '+8% range per level',
                 bonusPerLevel: 0.08,
                 maxLevel: 5,
-                cost: [120, 260, 560, 1200, 2600]
+                cost: [70, 160, 340, 720, 1560]
             },
             splash: {
                 name: 'Blast Radius',
                 description: '+12% splash radius per level',
                 bonusPerLevel: 0.12,
                 maxLevel: 5,
-                cost: [180, 400, 850, 1800, 3800]
+                cost: [110, 240, 510, 1080, 2280]
             }
         }
     },
@@ -97,21 +97,21 @@ export const TowerResearchData = {
                 description: '+10% damage per level',
                 bonusPerLevel: 0.10,
                 maxLevel: 5,
-                cost: [120, 260, 560, 1200, 2600]
+                cost: [70, 160, 340, 720, 1560]
             },
             slow: {
                 name: 'Deep Freeze',
                 description: '+10% slow effect per level',
                 bonusPerLevel: 0.10,
                 maxLevel: 5,
-                cost: [140, 300, 650, 1400, 3000]
+                cost: [80, 180, 390, 840, 1800]
             },
             speed: {
                 name: 'Frost Barrage',
                 description: '+8% attack speed per level',
                 bonusPerLevel: 0.08,
                 maxLevel: 5,
-                cost: [160, 350, 750, 1600, 3400]
+                cost: [100, 210, 450, 960, 2040]
             }
         }
     },
@@ -125,21 +125,21 @@ export const TowerResearchData = {
                 description: '+10% damage per level',
                 bonusPerLevel: 0.10,
                 maxLevel: 5,
-                cost: [200, 440, 950, 2000, 4200]
+                cost: [120, 260, 570, 1200, 2520]
             },
             chain: {
                 name: 'Arc Conductor',
                 description: '+1 chain target per level',
                 bonusPerLevel: 1,
                 maxLevel: 5,
-                cost: [250, 550, 1200, 2500, 5200]
+                cost: [150, 330, 720, 1500, 3120]
             },
             speed: {
                 name: 'Surge',
                 description: '+8% attack speed per level',
                 bonusPerLevel: 0.08,
                 maxLevel: 5,
-                cost: [220, 480, 1050, 2200, 4600]
+                cost: [130, 290, 630, 1320, 2760]
             }
         }
     }

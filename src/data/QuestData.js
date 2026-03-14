@@ -8,7 +8,7 @@ export const QuestData = [
         description: 'Kill 30 enemies',
         objective: 'kills',
         target: 30,
-        rewards: { gold: 45, xp: 30 },
+        rewards: { gold: 70, xp: 30 },
         icon: 'sword'
     },
     {
@@ -17,7 +17,7 @@ export const QuestData = [
         description: 'Kill 80 enemies',
         objective: 'kills',
         target: 80,
-        rewards: { gold: 80, xp: 55 },
+        rewards: { gold: 120, xp: 55 },
         icon: 'sword'
     },
     {
@@ -26,7 +26,7 @@ export const QuestData = [
         description: 'Kill 200 enemies',
         objective: 'kills',
         target: 200,
-        rewards: { gold: 150, xp: 100 },
+        rewards: { gold: 225, xp: 100 },
         icon: 'sword'
     },
     {
@@ -35,7 +35,7 @@ export const QuestData = [
         description: 'Survive 10 waves',
         objective: 'waves',
         target: 10,
-        rewards: { gold: 40, xp: 25 },
+        rewards: { gold: 60, xp: 25 },
         icon: 'shield'
     },
     {
@@ -44,7 +44,7 @@ export const QuestData = [
         description: 'Survive 25 waves',
         objective: 'waves',
         target: 25,
-        rewards: { gold: 60, xp: 40 },
+        rewards: { gold: 90, xp: 40 },
         icon: 'shield'
     },
     {
@@ -53,7 +53,7 @@ export const QuestData = [
         description: 'Survive 50 waves',
         objective: 'waves',
         target: 50,
-        rewards: { gold: 150, xp: 80 },
+        rewards: { gold: 225, xp: 80 },
         icon: 'shield'
     },
     {
@@ -62,7 +62,7 @@ export const QuestData = [
         description: 'Kill 1 boss',
         objective: 'bosses',
         target: 1,
-        rewards: { gold: 60, xp: 35 },
+        rewards: { gold: 90, xp: 35 },
         icon: 'star'
     },
     {
@@ -71,7 +71,7 @@ export const QuestData = [
         description: 'Kill 3 bosses',
         objective: 'bosses',
         target: 3,
-        rewards: { gold: 100, xp: 60 },
+        rewards: { gold: 150, xp: 60 },
         icon: 'star'
     },
     {
@@ -80,7 +80,7 @@ export const QuestData = [
         description: 'Kill 20 enemies with the hero',
         objective: 'heroKills',
         target: 20,
-        rewards: { gold: 55, xp: 40 },
+        rewards: { gold: 85, xp: 40 },
         icon: 'heart'
     },
     {
@@ -89,7 +89,7 @@ export const QuestData = [
         description: 'Kill 50 enemies with the hero',
         objective: 'heroKills',
         target: 50,
-        rewards: { gold: 120, xp: 70 },
+        rewards: { gold: 180, xp: 70 },
         icon: 'heart'
     },
     {
@@ -98,7 +98,7 @@ export const QuestData = [
         description: 'Earn 500 gold in missions',
         objective: 'goldEarned',
         target: 500,
-        rewards: { gold: 55, xp: 35 },
+        rewards: { gold: 85, xp: 35 },
         icon: 'coin'
     },
     {
@@ -107,7 +107,7 @@ export const QuestData = [
         description: 'Earn 2000 gold in missions',
         objective: 'goldEarned',
         target: 2000,
-        rewards: { gold: 120, xp: 70 },
+        rewards: { gold: 180, xp: 70 },
         icon: 'coin'
     },
     {
@@ -116,7 +116,7 @@ export const QuestData = [
         description: 'Win 1 map',
         objective: 'wins',
         target: 1,
-        rewards: { gold: 75, xp: 45 },
+        rewards: { gold: 115, xp: 45 },
         icon: 'flag'
     },
     {
@@ -125,7 +125,7 @@ export const QuestData = [
         description: 'Win 3 maps',
         objective: 'wins',
         target: 3,
-        rewards: { gold: 150, xp: 100 },
+        rewards: { gold: 225, xp: 100 },
         icon: 'flag'
     }
 ];
