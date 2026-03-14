@@ -674,13 +674,13 @@ export class GameScene extends Scene {
     // Calculate persistent gold reward based on waves reached
     // This is the gold the player takes home to the village
     _calcRunReward(wavesReached) {
-        // Base: 12g per wave + scaling
-        // Wave 5 ≈ 82g, Wave 10 ≈ 202g, Wave 15 ≈ 360g, Wave 20 ≈ 555g
+        // Base: 16g per wave + scaling, multiplied by map goldMult
         let total = 0;
         for (let w = 1; w <= wavesReached; w++) {
             total += 16 + Math.floor(w * 1.5);
         }
-        return total;
+        const mapMult = this.mapData.goldMult || 1;
+        return Math.floor(total * mapMult);
     }
 
     togglePause() {
