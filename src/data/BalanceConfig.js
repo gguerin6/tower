@@ -46,10 +46,10 @@ export const BalanceConfig = {
 
     SYNERGY_BONUS: 0.05,  // +5% damage per unique adjacent tower type
 
-    XP_PER_KILL: 24,
+    XP_PER_KILL: 8,
     XP_LEVEL_BASE: 100,
     XP_LEVEL_MULT: 1.28,
-    XP_PER_WAVE: 42,
+    XP_PER_WAVE: 14,
     MAX_LEVEL: 30,
     SKILL_POINTS_PER_LEVEL: 2
 };
