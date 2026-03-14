@@ -37,6 +37,10 @@ export class Enemy extends Entity {
         // Status effects
         this.slowTimer = 0;
         this.slowAmount = 0;
+        this.burnTimer = 0;
+        this.burnDps = 0;
+        this.poisonTimer = 0;
+        this.poisonDps = 0;
 
         // Ability
         this.ability = data.ability || null;
@@ -104,6 +108,30 @@ export class Enemy extends Entity {
             this.speed = this.baseSpeed * (1 - this.slowAmount);
         } else {
             this.speed = this.baseSpeed;
+        }
+
+        // Burn DoT (fire damage)
+        if (this.burnTimer > 0) {
+            this.burnTimer -= dt;
+            this.hp -= this.burnDps * dt;
+            if (this.hp <= 0 && this.active) {
+                this.hp = 0;
+                this.active = false;
+                this.dying = true;
+                this.deathTimer = 0;
+            }
+        }
+
+        // Poison DoT (magic damage)
+        if (this.poisonTimer > 0) {
+            this.poisonTimer -= dt;
+            this.hp -= this.poisonDps * dt;
+            if (this.hp <= 0 && this.active) {
+                this.hp = 0;
+                this.active = false;
+                this.dying = true;
+                this.deathTimer = 0;
+            }
         }
 
         // Demolisher: attack nearby tower
@@ -214,6 +242,20 @@ export class Enemy extends Entity {
         if (this.slowTimer > 0) {
             ctx.globalAlpha = 0.25;
             SpriteRenderer.drawCircle(ctx, sx, sy, visualSize * 0.6, '#6688ff');
+            ctx.globalAlpha = 1;
+        }
+
+        // Burn indicator (orange flicker)
+        if (this.burnTimer > 0) {
+            ctx.globalAlpha = 0.2 + Math.sin(Date.now() * 0.015) * 0.1;
+            SpriteRenderer.drawCircle(ctx, sx, sy, visualSize * 0.5, '#ff6600');
+            ctx.globalAlpha = 1;
+        }
+
+        // Poison indicator (green tint)
+        if (this.poisonTimer > 0) {
+            ctx.globalAlpha = 0.2 + Math.sin(Date.now() * 0.01) * 0.08;
+            SpriteRenderer.drawCircle(ctx, sx, sy, visualSize * 0.5, '#44dd44');
             ctx.globalAlpha = 1;
         }
 
@@ -341,6 +383,20 @@ export class Enemy extends Entity {
         if (amount > this.slowAmount || this.slowTimer <= 0) {
             this.slowAmount = amount;
             this.slowTimer = duration;
+        }
+    }
+
+    applyBurn(dps, duration) {
+        if (dps > this.burnDps || this.burnTimer <= 0) {
+            this.burnDps = dps;
+            this.burnTimer = duration;
+        }
+    }
+
+    applyPoison(dps, duration) {
+        if (dps > this.poisonDps || this.poisonTimer <= 0) {
+            this.poisonDps = dps;
+            this.poisonTimer = duration;
         }
     }
 

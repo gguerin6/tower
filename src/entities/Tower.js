@@ -45,10 +45,13 @@ export class Tower extends Entity {
         this.splashResearchBonus = 0;
         this.slowResearchBonus = 0;
         this.chainResearchBonus = 0;
+
+        // Synergy bonus (set by GameScene each frame)
+        this.synergyMult = 1;
     }
 
     get damage() {
-        const base = this.data.damage[this.level - 1] * this.damageMult;
+        const base = this.data.damage[this.level - 1] * this.damageMult * this.synergyMult;
         return base * (1 + this.damageUpgrades * 0.15);
     }
     get range() {
@@ -168,7 +171,11 @@ export class Tower extends Entity {
             slowAmount: this.data.slowAmount ? this.data.slowAmount[this.level - 1] * (1 + this.slowResearchBonus) : 0,
             slowDuration: this.data.slowDuration ? this.data.slowDuration[this.level - 1] : 0,
             chainTargets: this.data.chainTargets ? this.data.chainTargets[this.level - 1] + Math.floor(this.chainResearchBonus) : 0,
-            chainRange: this.data.chainRange ? this.data.chainRange[this.level - 1] : 0
+            chainRange: this.data.chainRange ? this.data.chainRange[this.level - 1] : 0,
+            burnDps: this.data.burnDps ? this.data.burnDps[this.level - 1] : 0,
+            burnDuration: this.data.burnDuration ? this.data.burnDuration[this.level - 1] : 0,
+            poisonDps: this.data.poisonDps ? this.data.poisonDps[this.level - 1] : 0,
+            poisonDuration: this.data.poisonDuration ? this.data.poisonDuration[this.level - 1] : 0
         };
     }
 
@@ -265,6 +272,14 @@ export class Tower extends Entity {
             const a = Math.min(this.hitFlashTimer / 0.08, 1) * 0.4;
             ctx.fillStyle = `rgba(255, 80, 40, ${a})`;
             ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        }
+
+        // Synergy glow indicator
+        if (this.synergyMult > 1) {
+            const a = Math.min((this.synergyMult - 1) * 2, 0.4);
+            ctx.strokeStyle = `rgba(255, 215, 0, ${a})`;
+            ctx.lineWidth = 2;
+            ctx.strokeRect(sx + 1, sy + 1, TILE_SIZE - 2, TILE_SIZE - 2);
         }
 
         // Tower HP bar (only show when damaged)

@@ -89,6 +89,14 @@ export class GameScene extends Scene {
 
         // Screen shake
         this.screenShake = { intensity: 0, timer: 0 };
+
+        // Screen flash (boss death)
+        this.screenFlash = { alpha: 0, color: '#fff' };
+
+        // Hero kill streak
+        this.heroKillStreak = 0;
+        this.heroKillTimer = 0;
+        this.killStreakAnnouncement = null;
     }
 
     enter(params = {}) {
@@ -113,6 +121,11 @@ export class GameScene extends Scene {
         this.comboGoldBonus = 0;
         this.lootCollected = {};
         this.waveAnnouncement = null;
+        this.autoWave = false;
+        this.screenFlash = { alpha: 0, color: '#fff' };
+        this.heroKillStreak = 0;
+        this.heroKillTimer = 0;
+        this.killStreakAnnouncement = null;
 
         // Support multi-path maps (paths = array of arrays)
         const mainPath = this.mapData.paths ? this.mapData.paths[0] : this.mapData.path;
@@ -183,9 +196,13 @@ export class GameScene extends Scene {
                     this.comboBestThisRun = this.comboCount;
                 }
 
+                // Bestiary tracking
+                const pd = this.game.playerData;
+                if (!pd.bestiary) pd.bestiary = {};
+                pd.bestiary[enemy.type] = true;
+
                 // Essence bonus from passive
                 let essenceMult = 1;
-                const pd = this.game.playerData;
                 if (pd.skills.goldFind > 0) {
                     essenceMult += [0.10, 0.22, 0.35, 0.50, 0.70][pd.skills.goldFind - 1];
                 }
@@ -216,10 +233,20 @@ export class GameScene extends Scene {
                 // Quest progress
                 this.updateQuestProgress('kills');
                 this.updateQuestProgress('goldEarned', earned);
-                if (byHero) this.updateQuestProgress('heroKills');
+                if (byHero) {
+                    this.updateQuestProgress('heroKills');
+                    this.heroKillStreak++;
+                    this.heroKillTimer = 1.5;
+                    const streakLabels = { 2: 'Double Kill!', 3: 'Triple Kill!', 4: 'Multi Kill!', 5: 'Rampage!' };
+                    const label = streakLabels[Math.min(this.heroKillStreak, 5)];
+                    if (label) {
+                        this.killStreakAnnouncement = { text: label, timer: 1.5, color: this.heroKillStreak >= 5 ? '#ff4444' : '#ffd700' };
+                    }
+                }
                 if (enemy.boss) {
                     this.updateQuestProgress('bosses');
-                    this.triggerShake(6, 0.4);
+                    this.triggerShake(10, 0.5);
+                    this.screenFlash = { alpha: 0.6, color: '#fff' };
                 }
 
                 // Particles
@@ -299,6 +326,11 @@ export class GameScene extends Scene {
                     this.game.particles.emit(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 40, 25, {
                         color: '#66bbff', speed: 100, life: 1.2, size: 4
                     });
+                }
+
+                // Auto-wave: skip to next wave immediately
+                if (this.autoWave) {
+                    this.skipWave();
                 }
             }),
             EventBus.on('waveStart', ({ wave, enemies, boss }) => {
@@ -533,6 +565,18 @@ export class GameScene extends Scene {
             tower.chainResearchBonus = getResearchBonus(pd, tower.type, 'chain');
         }
 
+        // Tower synergy: +5% damage per unique adjacent tower type
+        for (const tower of this.towerSystem.towers) {
+            const adjacentTypes = new Set();
+            for (const other of this.towerSystem.towers) {
+                if (other === tower || other.destroyed) continue;
+                if (Math.abs(other.col - tower.col) <= 2 && Math.abs(other.row - tower.row) <= 2) {
+                    if (other.type !== tower.type) adjacentTypes.add(other.type);
+                }
+            }
+            tower.synergyMult = 1 + adjacentTypes.size * BalanceConfig.SYNERGY_BONUS;
+        }
+
         // Tower targeting and shooting
         const activeEnemies = this.enemies.filter(e => e.active);
         for (const tower of this.towerSystem.towers) {
@@ -600,6 +644,27 @@ export class GameScene extends Scene {
             if (this.screenShake.timer <= 0) {
                 this.screenShake.intensity = 0;
                 this.screenShake.timer = 0;
+            }
+        }
+
+        // Screen flash decay
+        if (this.screenFlash.alpha > 0) {
+            this.screenFlash.alpha -= dt * 2;
+            if (this.screenFlash.alpha < 0) this.screenFlash.alpha = 0;
+        }
+
+        // Hero kill streak decay
+        if (this.heroKillTimer > 0) {
+            this.heroKillTimer -= sDt;
+            if (this.heroKillTimer <= 0) {
+                this.heroKillStreak = 0;
+                this.heroKillTimer = 0;
+            }
+        }
+        if (this.killStreakAnnouncement) {
+            this.killStreakAnnouncement.timer -= sDt;
+            if (this.killStreakAnnouncement.timer <= 0) {
+                this.killStreakAnnouncement = null;
             }
         }
 
@@ -881,6 +946,9 @@ export class GameScene extends Scene {
                     this.towerSystem.upgradeTower(tower);
                     this.essence -= cost;
                     Audio.playTowerUpgrade();
+                    this.game.particles.emit(tower.x, tower.y, 15, {
+                        color: '#ffd700', speed: 80, life: 0.7, size: 4
+                    });
                     this.towerMenu.openManage(tower, this.essence);
                 }
                 break;
@@ -892,6 +960,9 @@ export class GameScene extends Scene {
                     tower.upgradeStat(result.stat);
                     this.essence -= cost;
                     Audio.playTowerUpgrade();
+                    this.game.particles.emit(tower.x, tower.y, 8, {
+                        color: '#ffd700', speed: 60, life: 0.5, size: 3
+                    });
                     // Re-open menu to allow continued upgrades
                     this.towerMenu.openManage(tower, this.essence);
                 }
@@ -1109,9 +1180,38 @@ export class GameScene extends Scene {
         // Minimap
         this.renderMinimap(ui);
 
+        // Screen flash overlay
+        if (this.screenFlash.alpha > 0) {
+            ui.save();
+            ui.globalAlpha = this.screenFlash.alpha;
+            ui.fillStyle = this.screenFlash.color;
+            ui.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            ui.restore();
+        }
+
+        // Boss HP bar
+        const activeBoss = this.enemies.find(e => e.active && e.boss);
+        if (activeBoss) {
+            const bw = 300, bh = 14;
+            const bx = (CANVAS_WIDTH - bw) / 2, by = 52;
+            UIRenderer.drawPanel(ui, bx - 8, by - 6, bw + 16, bh + 28, 0.85);
+            SpriteRenderer.drawText(ui, activeBoss.data.name, CANVAS_WIDTH / 2, by + 2, '#ffd700', 12, 'center');
+            UIRenderer.drawHealthBar(ui, bx, by + 16, bw, bh, activeBoss.hp, activeBoss.maxHp);
+        }
+
         // Combo counter
         if (this.comboCount >= 3) {
             this.renderComboCounter(ui);
+        }
+
+        // Kill streak announcement
+        if (this.killStreakAnnouncement) {
+            const ks = this.killStreakAnnouncement;
+            const alpha = Math.min(1, ks.timer * 2);
+            ui.save();
+            ui.globalAlpha = alpha;
+            SpriteRenderer.drawText(ui, ks.text, CANVAS_WIDTH / 2, 120, ks.color, 20, 'center');
+            ui.restore();
         }
 
         // Wave preview

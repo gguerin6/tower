@@ -26,11 +26,16 @@ export class CombatSystem {
         const element = projectile.element || 'physical';
 
         if (target && target.active) {
-            const dealt = target.takeDamage(projectile.damage, projectile.ignoreArmor, element);
+            const isCrit = Math.random() < BalanceConfig.CRIT_CHANCE;
+            const dmg = isCrit ? projectile.damage * BalanceConfig.CRIT_MULT : projectile.damage;
+            const dealt = target.takeDamage(dmg, projectile.ignoreArmor, element);
             const em = target.lastElemMult || 1;
             const color = this._dmgTextColor(element, em);
             const suffix = this._dmgTextSuffix(em);
-            this.addFloatingText(target.x, target.y - 20, Math.round(dealt) + suffix, color);
+            this.addFloatingText(target.x, target.y - 20, Math.round(dealt) + suffix, isCrit ? '#ffd700' : color);
+            if (isCrit) {
+                this.addFloatingText(target.x, target.y - 35, 'CRIT!', '#ffd700');
+            }
 
             if (!target.active) {
                 EventBus.emit('enemyKilled', { enemy: target, byHero: false });
@@ -39,6 +44,16 @@ export class CombatSystem {
             // Slow
             if (projectile.slowAmount > 0) {
                 target.applySlow(projectile.slowAmount, projectile.slowDuration);
+            }
+
+            // Burn
+            if (projectile.burnDps > 0) {
+                target.applyBurn(projectile.burnDps, projectile.burnDuration);
+            }
+
+            // Poison
+            if (projectile.poisonDps > 0) {
+                target.applyPoison(projectile.poisonDps, projectile.poisonDuration);
             }
 
             // Splash damage

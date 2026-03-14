@@ -20,6 +20,7 @@ import { QuestData, QUEST_RESET_INTERVAL } from '../data/QuestData.js';
 import { BalanceConfig } from '../data/BalanceConfig.js';
 import { TowerResearchData, ResearchCaps, getResearchLevel } from '../data/TowerResearchData.js';
 import { TowerData, ElementColors } from '../data/TowerData.js';
+import { EnemyData } from '../data/EnemyData.js';
 
 // Preload village background
 const villageBgImg = new Image();
@@ -402,6 +403,7 @@ export class VillageScene extends Scene {
             if (key === 'q' || key === 'Q') this.openQuestBoard();
             if (key === 'f' || key === 'F') this.openBeastmaster();
             if (key === 'i' || key === 'I') this.openInventory();
+            if (key === 'y' || key === 'Y') this.openBestiary();
             if (key === 'p' || key === 'P' || key === 'Enter') {
                 this.game.sceneManager.switch(SCENES.MAP_SELECT);
             }
@@ -438,6 +440,7 @@ export class VillageScene extends Scene {
     openQuestBoard() { this._openShop('questboard'); }
     openBeastmaster() { this._openShop('beastmaster'); }
     openInventory() { this._openShop('inventory'); }
+    openBestiary() { this._openShop('bestiary'); }
 
     closeShop() {
         this.activeShop = null;
@@ -962,6 +965,16 @@ export class VillageScene extends Scene {
                 }
                 break;
             }
+            case 'bestiary': {
+                if (!pd.bestiary) pd.bestiary = {};
+                const elemSymbols = { fire: 'Fire', ice: 'Ice', lightning: 'Zap', magic: 'Magic', physical: 'Phys' };
+                for (const [id, data] of Object.entries(EnemyData)) {
+                    const discovered = !!pd.bestiary[id];
+                    this.shopItems.push({ type: 'bestiary', id, data, discovered, y: cy });
+                    cy += 62;
+                }
+                break;
+            }
         }
 
         // Calculate max scroll based on content height
@@ -1138,7 +1151,7 @@ export class VillageScene extends Scene {
 
         // Keyboard hints (bottom bar)
         if (!this.activeShop) {
-            SpriteRenderer.drawTextNoOutline(ui, '[B] Blacksmith  [E] Elder  [S] Sage  [M] Merchant  [F] Pets  [Q] Quests  [I] Inventory  [P] Portal', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 16, '#666', 10, 'center');
+            SpriteRenderer.drawTextNoOutline(ui, '[B] Blacksmith  [E] Elder  [S] Sage  [M] Merchant  [F] Pets  [Q] Quests  [I] Inventory  [Y] Bestiary  [P] Portal', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 16, '#666', 10, 'center');
         }
 
         // Shop panel
@@ -1728,7 +1741,7 @@ export class VillageScene extends Scene {
 
         UIRenderer.drawPanel(ctx, PX, PY, PW, PH, 0.95);
 
-        const titles = { blacksmith: 'Blacksmith', elder: 'Elder', sage: 'Sage', merchant: 'Merchant', questboard: 'Quest Board', beastmaster: 'Beast Tamer', inventory: 'Inventory' };
+        const titles = { blacksmith: 'Blacksmith', elder: 'Elder', sage: 'Sage', merchant: 'Merchant', questboard: 'Quest Board', beastmaster: 'Beast Tamer', inventory: 'Inventory', bestiary: 'Bestiary' };
 
         // Header
         SpriteRenderer.drawText(ctx, titles[this.activeShop], PX + 18, PY + 10, '#ffd700', 22);
@@ -1836,6 +1849,8 @@ export class VillageScene extends Scene {
                 this._renderInvGear(ctx, cardX, y, cardW, item);
             } else if (item.type === 'matTrade') {
                 this._renderMatTradeCard(ctx, cardX, y, cardW, item);
+            } else if (item.type === 'bestiary') {
+                this._renderBestiaryCard(ctx, cardX, y, cardW, 58, item);
             }
         }
 
@@ -3326,5 +3341,65 @@ export class VillageScene extends Scene {
         ctx.fill();
         // Warm glow
         SpriteRenderer._glow(ctx, x, y - 25, 22, '#ffcc44', 0.08);
+    }
+
+    _renderBestiaryCard(ctx, x, y, w, h, item) {
+        const { data, discovered, id } = item;
+        const r = 6;
+
+        // Card bg
+        ctx.fillStyle = discovered ? '#12121a' : '#0a0a10';
+        SpriteRenderer._rr(ctx, x, y, w, h, r);
+        ctx.fill();
+        ctx.strokeStyle = discovered ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.02)';
+        ctx.lineWidth = 1;
+        SpriteRenderer._rr(ctx, x, y, w, h, r);
+        ctx.stroke();
+
+        if (!discovered) {
+            // Undiscovered: silhouette
+            SpriteRenderer.drawTextNoOutline(ctx, '???', x + 28, y + 8, '#444', 16);
+            SpriteRenderer.drawTextNoOutline(ctx, 'Not yet encountered', x + 28, y + 30, '#333', 11);
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            ctx.arc(x + 14, y + h / 2, 8, 0, Math.PI * 2);
+            ctx.fill();
+            return;
+        }
+
+        // Color accent
+        ctx.fillStyle = data.color;
+        ctx.globalAlpha = 0.3;
+        SpriteRenderer._rr(ctx, x, y, 3, h, r);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Enemy color dot
+        ctx.fillStyle = data.color;
+        ctx.beginPath();
+        ctx.arc(x + 14, y + h / 2, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Name + boss tag
+        const nameColor = data.boss ? '#ffd700' : '#ddd';
+        const nameStr = data.boss ? `${data.name} [BOSS]` : data.name;
+        SpriteRenderer.drawTextNoOutline(ctx, nameStr, x + 30, y + 5, nameColor, 14);
+
+        // Stats
+        const stats = `HP: ${data.hp}  SPD: ${data.speed}  ARM: ${data.armor}  DMG: ${data.damage}  Gold: ${data.gold}`;
+        SpriteRenderer.drawTextNoOutline(ctx, stats, x + 30, y + 22, '#999', 10);
+
+        // Resistances
+        if (data.resistances) {
+            let rx = x + 30;
+            const ry = y + 38;
+            for (const [elem, mult] of Object.entries(data.resistances)) {
+                const col = ElementColors[elem] || '#fff';
+                const label = mult > 1 ? `${elem} x${mult}` : `${elem} x${mult}`;
+                const textCol = mult > 1 ? '#ff6666' : '#66ff66';
+                SpriteRenderer.drawTextNoOutline(ctx, label, rx, ry, textCol, 9);
+                rx += ctx.measureText(label).width + 12;
+            }
+        }
     }
 }

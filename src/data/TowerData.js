@@ -31,7 +31,7 @@ export const TowerData = {
     },
     mage: {
         name: 'Mage Tower',
-        description: 'Magic damage, ignores armor',
+        description: 'Magic damage, ignores armor, poisons',
         element: 'magic',
         cost: 80,
         damage: [18, 25, 34, 44],
@@ -41,11 +41,13 @@ export const TowerData = {
         projectileColor: '#88f',
         color: '#446',
         targetMode: 'strongest',
-        ignoreArmor: true
+        ignoreArmor: true,
+        poisonDps: [2, 4, 6, 9],
+        poisonDuration: [3, 3, 3.5, 4]
     },
     cannon: {
         name: 'Cannon Tower',
-        description: 'Fire AoE, slow fire rate',
+        description: 'Fire AoE, burns enemies',
         element: 'fire',
         cost: 100,
         damage: [28, 38, 50, 65],
@@ -56,7 +58,9 @@ export const TowerData = {
         color: '#555',
         targetMode: 'closest',
         splash: [40, 46, 53, 60],
-        splashDamagePct: 0.45
+        splashDamagePct: 0.45,
+        burnDps: [3, 5, 8, 12],
+        burnDuration: [2, 2.5, 3, 3.5]
     },
     frost: {
         name: 'Frost Tower',

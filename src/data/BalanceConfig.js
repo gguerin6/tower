@@ -41,6 +41,11 @@ export const BalanceConfig = {
         dmgMult: 1.04
     },
 
+    CRIT_CHANCE: 0.08,
+    CRIT_MULT: 1.5,
+
+    SYNERGY_BONUS: 0.05,  // +5% damage per unique adjacent tower type
+
     XP_PER_KILL: 8,
     XP_LEVEL_BASE: 100,
     XP_LEVEL_MULT: 1.45,

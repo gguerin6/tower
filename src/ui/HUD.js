@@ -35,7 +35,12 @@ export class HUD {
             this.scene.skipWave();
         }, { fontSize: 14, color: '#2a3a2a', hoverColor: '#3a5a3a' });
 
-        this.buttons = [this.pauseButton, this.speedButton, this.nextWaveButton];
+        this.autoWaveButton = new Button(CANVAS_WIDTH - 302, 8, 92, 32, 'Auto: Off', () => {
+            this.scene.autoWave = !this.scene.autoWave;
+            this.autoWaveButton.text = this.scene.autoWave ? 'Auto: On' : 'Auto: Off';
+        }, { fontSize: 14, color: '#2a2a3a', hoverColor: '#3a3a5a' });
+
+        this.buttons = [this.pauseButton, this.speedButton, this.nextWaveButton, this.autoWaveButton];
     }
 
     handleMouseMove(x, y) {

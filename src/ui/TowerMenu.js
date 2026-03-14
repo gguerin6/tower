@@ -71,7 +71,7 @@ export class TowerMenu {
                 type,
                 text: data.name,
                 cost: data.cost,
-                description: locked ? lockReason : `[${elemName}] ${data.description}`,
+                description: locked ? lockReason : `[${elemName}] DPS: ${(data.damage[0] / data.cooldown[0]).toFixed(1)} — ${data.description}`,
                 canAfford: !locked && gold >= data.cost,
                 action: 'build',
                 locked,
